@@ -43,4 +43,39 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
             <scope>test</scope>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>run-cucumbers</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <tasks>
+                                <echo message="Running Cucumber Ruby Features"/>
+                                <java fork="true"
+                                      classname="cucumber.cli.Main"
+                                      classpathref="maven.test.classpath"
+                                      failonerror="true"
+                                        >
+                                    <arg value="-f"/>
+                                    <arg value="pretty"/>
+                                    <arg value="--glue"/>
+                                    <!-- this path is relative to things in the class path -->
+                                    <arg value="step_definitions"/>
+                                    <!-- this is the feature file to run, it doesn't accept globs -->
+                                    <arg value="RackStack.feature"/>
+                                </java>
+                            </tasks>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>
