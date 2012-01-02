@@ -1,7 +1,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
-http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.rackspace.example</groupId>
@@ -17,6 +16,68 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
             <url>https://oss.sonatype.org/content/repositories/snapshots</url>
         </repository>
     </repositories> -->
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.6</version>
+                <executions>
+                    <execution>
+                        <phase>test-compile</phase>
+                        <configuration>
+                            <target>
+                                <!-- include the ant-contrib tasks -->
+                                <taskdef resource="net/sf/antcontrib/antcontrib.properties"
+                                         classpathref="maven.plugin.classpath"/>
+                                <macrodef name="compile-ruby">
+                                    <attribute name="dir"/>
+                                    <sequential>
+                                        <echo message="Compiling ruby gems for @{dir}!"/>
+                                        <java jar="${maven.dependency.org.jruby.jruby-complete.jar.path}"
+                                              fork="true" failonerror="true" maxmemory="256m"
+                                              newenvironment="true">
+                                            <arg value="-S"/>
+                                            <arg value="jrubyc"/>
+                                            <arg value="--verbose"/>
+                                            <arg value="-t"/>
+                                            <arg value="${basedir}/target/test-classes"/>
+                                            <arg value="@{dir}"/>
+                                            <env key="PATH" path="${java.home}/bin"/>
+                                        </java>
+                                    </sequential>
+                                </macrodef>
+
+                                <foreach target="compile-ruby" param="dir">
+                                    <path>
+                                        <dirset dir="${basedir}/src/test/rubyGems/">
+                                            <include name="gems/**/lib"/>
+                                        </dirset>
+                                    </path>
+                                </foreach>
+                            </target>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>ant-contrib</groupId>
+                        <artifactId>ant-contrib</artifactId>
+                        <version>1.0b3</version>
+                        <exclusions>
+                            <exclusion>
+                                <groupId>ant</groupId>
+                                <artifactId>ant</artifactId>
+                            </exclusion>
+                        </exclusions>
+                    </dependency>
+                </dependencies>
+            </plugin>
+        </plugins>
+    </build>
 
     <dependencies>
         <dependency>
@@ -45,37 +106,56 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
         </dependency>
     </dependencies>
 
-    <build>
-        <plugins>
-            <plugin>
-                <artifactId>maven-antrun-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>run-cucumbers</id>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                        <configuration>
-                            <tasks>
-                                <echo message="Running Cucumber Ruby Features"/>
-                                <java fork="true"
-                                      classname="cucumber.cli.Main"
-                                      classpathref="maven.test.classpath"
-                                      failonerror="true"
-                                        >
-                                    <arg value="-f"/>
-                                    <arg value="pretty"/>
-                                    <arg value="--glue"/>
-                                    <!-- this path is relative to things in the class path -->
-                                    <arg value="step_definitions"/>
-                                    <!-- this is the feature file to run, it doesn't accept globs -->
-                                    <arg value="RackStack.feature"/>
-                                </java>
-                            </tasks>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
+    <profiles>
+        <profile>
+            <id>install-gems</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <version>1.6</version>
+                        <executions>
+                            <execution>
+                                <phase>generate-test-sources</phase>
+                                <configuration>
+                                    <target>
+                                        <property file="gems.properties"/>
+                                        <macrodef name="install-gem">
+                                            <attribute name="gem"/>
+                                            <attribute name="version"/>
+                                            <sequential>
+                                                <java jar="${maven.dependency.org.jruby.jruby-complete.jar.path}"
+                                                      fork="true" failonerror="true" maxmemory="256m"
+                                                      newenvironment="true">
+                                                    <arg value="-S"/>
+                                                    <arg value="gem"/>
+                                                    <arg value="install"/>
+                                                    <arg value="@{gem}"/>
+                                                    <arg value="--version=@{version}"/>
+                                                    <!-- <arg value="platform=java" />-->
+                                                    <arg value="-i"/>
+                                                    <arg value="${project.basedir}/src/test/rubyGems"/>
+                                                    <env key="PATH" path="${java.home}/bin"/>
+                                                </java>
+                                            </sequential>
+                                        </macrodef>
+                                        <install-gem gem="json" version="1.5.4"/>
+                                        <!-- needed to get json to behave with jruby -->
+                                        <install-gem gem="rspec" version="2.7.0"/>
+                                        <install-gem gem="rest-client" version="1.6.7"/>
+                                        <install-gem gem="jruby-openssl" version="0.7.4"/>
+                                    </target>
+                                </configuration>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
 </project>

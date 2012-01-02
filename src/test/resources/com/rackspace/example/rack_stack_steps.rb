@@ -1,5 +1,6 @@
 require 'java'
 require 'test/unit'
+require 'rspec'
 
 include Test::Unit::Assertions
 
