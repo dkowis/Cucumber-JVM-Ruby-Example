@@ -10,7 +10,6 @@ Given /^an empty stack$/ do
 end
 
 When /^I push an item into the stack$/ do
-  Kernel.puts "Pushing item into the stack"
   @item = Object.new
   @stack.push(@item)
 end
@@ -20,9 +19,20 @@ Then /^the stack contains one item$/ do
 end
 
 When /^I push another item into the stack$/ do
+  pending "BLARG"
   When "I push an item into the stack"
 end
 
 Then /^the stack contains two items$/ do
   assert_equal 2, @stack.size
+end
+
+When /^I pop from the stack$/ do
+  pending "not done yet!"
+  # Express the Regexp above with the code you wish you had
+end
+
+Then /^I get the same item back$/ do
+  pending
+  # Express the Regexp above with the code you wish you had
 end

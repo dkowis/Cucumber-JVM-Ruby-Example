@@ -8,7 +8,6 @@ public class RackStack {
     
     public void push(Object o){
         s.push(o);
-        System.out.println("PUSHED AN ITEM!!!!");
     }
     
     public int size(){
