@@ -7,5 +7,5 @@ import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
 @Feature("RackStack.feature")
-public class stack_Test {
+public class StackTest {
 }

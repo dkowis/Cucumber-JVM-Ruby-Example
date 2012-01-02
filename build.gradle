@@ -1,0 +1,13 @@
+apply plugin: 'java'
+
+repositories {
+  mavenCentral()
+  mavenLocal()
+}
+
+dependencies {
+  testCompile 'org.jruby:jruby-complete:1.6.5'
+  testCompile 'info.cukes:cucumber-jruby:1.0.0.RC2-SNAPSHOT'
+  testCompile 'info.cukes:cucumber-junit:1.0.0.RC2-SNAPSHOT'
+  testCompile 'junit:junit:4.10'
+}

@@ -1,6 +1,5 @@
 require 'java'
 require 'test/unit'
-require 'rspec'
 
 include Test::Unit::Assertions
 
@@ -20,7 +19,6 @@ Then /^the stack contains one item$/ do
 end
 
 When /^I push another item into the stack$/ do
-  pending "BLARG"
   When "I push an item into the stack"
 end
 
@@ -29,7 +27,7 @@ Then /^the stack contains two items$/ do
 end
 
 When /^I pop from the stack$/ do
-  pending "not done yet!"
+  pending
   # Express the Regexp above with the code you wish you had
 end
 
