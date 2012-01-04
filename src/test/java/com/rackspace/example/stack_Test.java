@@ -6,6 +6,6 @@ import org.junit.Ignore;
 import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
-@Feature(value = "RackStack.feature", packages = "step_definitions")
+@Feature(value = "RackStack.feature")
 public class stack_Test {
 }

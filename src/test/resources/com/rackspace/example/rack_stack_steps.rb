@@ -30,11 +30,13 @@ Then /^the stack contains two items$/ do
 end
 
 When /^I pop from the stack$/ do
-  pending "not done yet!"
+  #pending DSL isn't in the snapshot yet!
+  #pending "not done yet!"
   # Express the Regexp above with the code you wish you had
 end
 
 Then /^I get the same item back$/ do
-  pending
+  #pending DSL isn't in the snapshot yet!
+  #pending
   # Express the Regexp above with the code you wish you had
 end
