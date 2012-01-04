@@ -20,7 +20,7 @@ Then /^the stack contains one item$/ do
 end
 
 When /^I push another item into the stack$/ do
-  When "I push an item into the stack"
+  #When "I push an item into the stack"
 end
 
 Then /^the stack contains two items$/ do
