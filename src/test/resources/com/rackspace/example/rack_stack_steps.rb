@@ -19,8 +19,10 @@ Then /^the stack contains one item$/ do
 end
 
 When /^I push another item into the stack$/ do
-  pending "BLARG"
-  When "I push an item into the stack"
+  # cannot yet call a stepdef from another like this :(
+  #When "I push an item into the stack"
+
+  @stack.push(Object.new)
 end
 
 Then /^the stack contains two items$/ do
