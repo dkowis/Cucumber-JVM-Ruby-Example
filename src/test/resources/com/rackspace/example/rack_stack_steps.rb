@@ -1,7 +1,8 @@
 require 'java'
 require 'test/unit'
 
-include Test::Unit::Assertions
+require 'rubygems'
+require 'rspec'
 
 Given /^an empty stack$/ do
   java_import com.rackspace.example.RackStack
@@ -15,7 +16,7 @@ When /^I push an item into the stack$/ do
 end
 
 Then /^the stack contains one item$/ do
-  assert_equal(1, @stack.size)
+  @stack.size.should == 1
 end
 
 When /^I push another item into the stack$/ do
@@ -26,7 +27,7 @@ When /^I push another item into the stack$/ do
 end
 
 Then /^the stack contains two items$/ do
-  assert_equal 2, @stack.size
+  @stack.size.should == 2
 end
 
 When /^I pop from the stack$/ do
