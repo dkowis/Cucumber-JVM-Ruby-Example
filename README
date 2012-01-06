@@ -1,3 +1,12 @@
 THIS BRANCH REQUIRES THE GEM STUFF TO BE IN CUCUMBER-JVM JRUBY STUFF.
 
 IT WILL NOT WORK WITHOUT IT OMG
+
+To install the gems into the local filesystem (I haven't committed the gems)
+
+    mvn test -Pinstall-gems
+
+The gems will be installed into ${builddir}/src/test/gems the same path as specified in the 
+cucumber-jruby.properties file.
+
+Then your tests will pass! HORJAY!
