@@ -5,3 +5,6 @@ build
 *.ipr
 *.iws
 target
+
+# so we ignore the src/test/gems dir now that we've added bundler to avoid accidentally committing things
+src/test/gems
