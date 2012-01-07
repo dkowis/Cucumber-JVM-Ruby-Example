@@ -54,8 +54,31 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
         </testResources>
         <plugins>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.6</version>
                 <executions>
+                    <execution>
+                        <phase>generate-test-resources</phase>
+                        <configuration>
+                            <target>
+                                <echo message="Doing bundle install"/>
+                                <java jar="${maven.dependency.org.jruby.jruby-complete.jar.path}"
+                                      fork="true" failonerror="true" maxmemory="512m"
+                                      newenvironment="true">
+                                    <env key="GEM_HOME" path="${basedir}/src/test/gems"/>
+                                    <arg value="-S"/>
+                                    <arg value="${basedir}/src/test/gems/bin/bundle"/>
+                                    <arg value="install"/>
+                                    <arg value="--gemfile=${basedir}/Gemfile"/>
+                                </java>
+                            </target>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+
                     <execution>
                         <id>run-cucumbers</id>
                         <goals>
@@ -67,8 +90,7 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
                                 <java fork="true"
                                       classname="cucumber.cli.Main"
                                       classpathref="maven.test.classpath"
-                                      failonerror="true"
-                                        >
+                                      failonerror="true">
                                     <arg value="-f"/>
                                     <arg value="pretty"/>
                                     <arg value="--glue"/>
@@ -80,6 +102,7 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
                             </tasks>
                         </configuration>
                     </execution>
+
                 </executions>
             </plugin>
         </plugins>
@@ -87,7 +110,7 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <profiles>
         <profile>
-            <id>install-gems</id>
+            <id>initial-bundle</id>
             <build>
                 <plugins>
                     <plugin>
@@ -99,33 +122,31 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
                                 <phase>generate-test-resources</phase>
                                 <configuration>
                                     <target>
-                                        <property file="gems.properties"/>
-                                        <macrodef name="install-gem">
-                                            <attribute name="gem"/>
-                                            <attribute name="version"/>
-                                            <sequential>
-                                                <java jar="${maven.dependency.org.jruby.jruby-complete.jar.path}"
-                                                      fork="true" failonerror="true" maxmemory="256m"
-                                                      newenvironment="true">
-                                                    <arg value="-S"/>
-                                                    <arg value="gem"/>
-                                                    <arg value="install"/>
-                                                    <arg value="@{gem}"/>
-                                                    <arg value="--version=@{version}"/>
-                                                    <!-- <arg value="platform=java" />-->
-                                                    <arg value="-i"/>
-                                                    <arg value="${basedir}/src/test/gems"/>
-                                                    <arg value="--no-ri"/>
-                                                    <arg value="--no-rdoc"/>
-                                                    <env key="PATH" path="${java.home}/bin"/>
-                                                </java>
-                                            </sequential>
-                                        </macrodef>
-                                        <install-gem gem="json" version="1.5.4"/>
-                                        <install-gem gem="jruby-openssl" version="0.7.4"/>
-                                        <!-- needed to get json to behave with jruby -->
-                                        <install-gem gem="rspec" version="2.6.0"/>
-                                        <install-gem gem="rest-client" version="1.6.7"/>
+                                        <sequential>
+                                            <echo message="Installing bundler gem"/>
+                                            <java jar="${maven.dependency.org.jruby.jruby-complete.jar.path}"
+                                                  fork="true" failonerror="true" maxmemory="256m"
+                                                  newenvironment="true">
+                                                <arg value="-S"/>
+                                                <arg value="gem"/>
+                                                <arg value="install"/>
+                                                <arg value="bundler"/>
+                                                <arg value="-i"/>
+                                                <arg value="${basedir}/src/test/gems"/>
+                                                <arg value="--no-ri"/>
+                                                <arg value="--no-rdoc"/>
+                                            </java>
+
+                                            <echo message="Initializing bundle"/>
+                                            <java jar="${maven.dependency.org.jruby.jruby-complete.jar.path}"
+                                                  fork="true" failonerror="true" maxmemory="512m"
+                                                  newenvironment="true">
+                                                <env key="GEM_HOME" path="${basedir}/src/test/gems"/>
+                                                <arg value="-S"/>
+                                                <arg value="${basedir}/src/test/gems/bin/bundle"/>
+                                                <arg value="init"/>
+                                            </java>
+                                        </sequential>
                                     </target>
                                 </configuration>
                                 <goals>
