@@ -80,6 +80,7 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
                     </execution>
 
                     <execution>
+                        <phase>test</phase>
                         <id>run-cucumbers</id>
                         <goals>
                             <goal>run</goal>
@@ -95,9 +96,9 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
                                     <arg value="pretty"/>
                                     <arg value="--glue"/>
                                     <!-- this path is relative to things in the class path -->
-                                    <arg value="step_definitions"/>
+                                    <arg value="src/test/resources"/>
                                     <!-- this is the feature file to run, it doesn't accept globs -->
-                                    <arg value="RackStack.feature"/>
+                                    <arg value="src/test/resources"/>
                                 </java>
                             </tasks>
                         </configuration>
