@@ -13,4 +13,9 @@ public class RackStack {
     public int size(){
         return s.size();
     }
+    
+    public Object pop() {
+        return s.pop();
+    }
+        
 }
