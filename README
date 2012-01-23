@@ -1,11 +1,4 @@
-THIS BRANCH REQUIRES THE GEM STUFF TO BE IN CUCUMBER-JVM JRUBY STUFF.
-
-This repo: https://github.com/dkowis/cucumber-jvm/tree/gem_path
-Be sure to checkout the gem_path branch
-
-IT WILL NOT WORK WITHOUT IT OMG
-
-The way this one works is a bit different.
+This Example project requires HEAD of cucumber-jvm at the moment for the World do block stuff
 
 You can take the pom.xml as is, and then create a new project out of it.
 
