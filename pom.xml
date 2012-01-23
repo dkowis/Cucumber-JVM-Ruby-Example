@@ -10,6 +10,10 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <packaging>jar</packaging>
     <name>Examples: Ruby Stack</name>
 
+    <properties>
+        <cucumber-jvm-version>1.0.0.RC12-SNAPSHOT</cucumber-jvm-version>
+    </properties>
+
     <!-- Uncomment to use the snapshots, else install them by hand
     <repositories>
         <repository>
@@ -28,13 +32,13 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
         <dependency>
             <groupId>info.cukes</groupId>
             <artifactId>cucumber-jruby</artifactId>
-            <version>1.0.0.RC2-SNAPSHOT</version>
+            <version>${cucumber-jvm-version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>info.cukes</groupId>
             <artifactId>cucumber-junit</artifactId>
-            <version>1.0.0.RC2-SNAPSHOT</version>
+            <version>${cucumber-jvm-version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
