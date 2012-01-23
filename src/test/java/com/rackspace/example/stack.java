@@ -7,6 +7,5 @@ import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
 @Feature(value = "RackStack.feature")
-@Ignore
 public class stack {
 }

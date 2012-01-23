@@ -4,6 +4,11 @@ require 'test/unit'
 require 'rubygems'
 require 'rspec'
 
+World do
+  extend RSpec::Matchers
+end
+
+
 Given /^an empty stack$/ do
   java_import com.rackspace.example.RackStack
 
@@ -20,10 +25,7 @@ Then /^the stack contains one item$/ do
 end
 
 When /^I push another item into the stack$/ do
-  # cannot yet call a stepdef from another like this :(
-  #When "I push an item into the stack"
-
-  @stack.push(Object.new)
+  When "I push an item into the stack"
 end
 
 Then /^the stack contains two items$/ do
@@ -31,13 +33,9 @@ Then /^the stack contains two items$/ do
 end
 
 When /^I pop from the stack$/ do
-  #pending DSL isn't in the snapshot yet!
-  #pending "not done yet!"
-  # Express the Regexp above with the code you wish you had
+  @popped_item = @stack.pop
 end
 
 Then /^I get the same item back$/ do
-  #pending DSL isn't in the snapshot yet!
-  #pending
-  # Express the Regexp above with the code you wish you had
+  @popped_item.should == @item
 end
