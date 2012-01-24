@@ -1,5 +1,6 @@
 require 'java'
 require 'test/unit'
+include Test::Unit::Assertions
 
 require 'rubygems'
 require 'rspec'
@@ -38,4 +39,18 @@ end
 
 Then /^I get the same item back$/ do
   @popped_item.should == @item
+end
+
+When /^I push "([^"]*)" into the stack$/ do |value|
+  @stack.push(value)
+end
+
+When /^I pop two values from the stack$/ do
+  @value = Array.new
+  @value << @stack.pop()
+  @value << @stack.pop()
+end
+
+Then /^I should get "([^"]*)"$/ do |arg1|
+  assert_equal arg1, @value.join(",")
 end
