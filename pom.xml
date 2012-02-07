@@ -11,7 +11,7 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <name>Examples: Ruby Stack</name>
 
     <properties>
-        <cucumber-jvm-version>1.0.0.RC12-SNAPSHOT</cucumber-jvm-version>
+        <cucumber-jvm-version>1.0.0.RC13</cucumber-jvm-version>
     </properties>
 
     <!-- Uncomment to use the snapshots, else install them by hand
@@ -98,10 +98,14 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
                                       failonerror="true">
                                     <arg value="-f"/>
                                     <arg value="pretty"/>
+                                    <arg value="-f"/>
+                                    <arg value="html"/>
+                                    <arg value="-o"/>
+                                    <arg value="target"/>
                                     <arg value="--glue"/>
                                     <!-- this path is relative to things in the class path -->
                                     <arg value="src/test/resources"/>
-                                    <!-- this is the feature file to run, it doesn't accept globs -->
+                                    <!-- this is the feature file path to search for .feature s -->
                                     <arg value="src/test/resources"/>
                                 </java>
                             </tasks>
