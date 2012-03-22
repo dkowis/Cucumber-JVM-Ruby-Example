@@ -9,6 +9,10 @@ World do
   extend RSpec::Matchers
 end
 
+After do
+  raise "omg an exception"
+end
+
 
 Given /^an empty stack$/ do
   java_import com.rackspace.example.RackStack
