@@ -6,6 +6,6 @@ import org.junit.Ignore;
 import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
-@Options(features = "RackStack.feature")
+@Options(features = "RackStack.feature", format = "pretty")
 public class stackTest {
 }
