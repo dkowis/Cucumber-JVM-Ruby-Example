@@ -11,7 +11,7 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <name>Examples: Ruby Stack</name>
 
     <properties>
-        <cucumber-jvm-version>1.0.0.RC23</cucumber-jvm-version>
+        <cucumber-jvm-version>1.0.1</cucumber-jvm-version>
     </properties>
 
     <!-- Uncomment to use the snapshots, else install them by hand
@@ -82,32 +82,6 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
                             <goal>run</goal>
                         </goals>
                     </execution>
-
-                    <execution>
-                        <phase>test</phase>
-                        <id>run-cucumbers</id>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                        <configuration>
-                            <tasks>
-                                <echo message="Running Cucumber Ruby Features"/>
-                                <java fork="true"
-                                      classname="cucumber.cli.Main"
-                                      classpathref="maven.test.classpath"
-                                      failonerror="true">
-                                    <arg value="-f"/>
-                                    <arg value="pretty"/>
-                                    <arg value="--glue"/>
-                                    <!-- this path is relative to things in the class path -->
-                                    <arg value="src/test/resources"/>
-                                    <!-- this is the feature file to run, it doesn't accept globs -->
-                                    <arg value="src/test/resources"/>
-                                </java>
-                            </tasks>
-                        </configuration>
-                    </execution>
-
                 </executions>
             </plugin>
         </plugins>
