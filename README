@@ -1,17 +1,19 @@
-This Example project requires HEAD of cucumber-jvm at the moment for the World do block stuff
+This example project requires a recent version of cucumber-jvm for the World do block stuff
 
 You can take the pom.xml as is, and then create a new project out of it.
 
 Firstly, you run
     mvn test -Pinitial-bundle
 
-To install the bundler gem and intialize a sample Gemfile.
+To install the bundler gem and initialize a sample Gemfile.
 
 Then you should add the src/test/gems directory and commit it. After that you should add the src/test/gems directory
 to .gitignore so you don't add any more gems.
 
 Now you can treat the Gemfile and Gemfile.lock as files to be committed to your repo, and any time someone runs the tests
-the bundle install will be ran, and that will make sure you always have the gems available for testing, and that any
+the bundle install will be run, and that will make sure you always have the gems available for testing, and that any
 updated gems are acquired and downloaded, but don't pollute your repo.
+
+The tests are running twice to demonstrate running it from JUnit as well as from the CLI. So you should disable one of them once you have decided which way you want to invoke cucumber.
 
 Hooray!
