@@ -11,7 +11,7 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <name>Examples: Ruby Stack</name>
 
     <properties>
-        <cucumber-jvm-version>1.0.1</cucumber-jvm-version>
+        <cucumber-jvm-version>1.0.6</cucumber-jvm-version>
     </properties>
 
     <!-- Uncomment to use the snapshots, else install them by hand
