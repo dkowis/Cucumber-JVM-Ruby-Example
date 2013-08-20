@@ -11,7 +11,7 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <name>Examples: Ruby Stack</name>
 
     <properties>
-        <cucumber-jvm-version>1.0.6</cucumber-jvm-version>
+        <cucumber-jvm-version>1.1.4</cucumber-jvm-version>
     </properties>
 
     <!-- Uncomment to use the snapshots, else install them by hand
@@ -26,7 +26,7 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
         <dependency>
             <groupId>org.jruby</groupId>
             <artifactId>jruby-complete</artifactId>
-            <version>1.6.5</version>
+            <version>1.7.4</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -44,7 +44,7 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.10</version>
+            <version>4.11</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -64,6 +64,11 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
                 <executions>
                     <execution>
                         <phase>generate-test-resources</phase>
+                        <!--
+                        This plugin will execute during the generate-test-resources.
+                         Basically it runs bundle install within the context of Jruby, so that you can ensure
+                         your bundle is up to date. Not necessary for all development work, but extremely useful on CI.
+                        -->
                         <configuration>
                             <target>
                                 <echo message="Doing bundle install"/>
@@ -86,6 +91,11 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
                     <execution>
                         <phase>test</phase>
                         <id>run-cucumbers</id>
+                        <!--
+                        This is a maven task that will execute the CLI version of cucumber, so as to offer a separate
+                        way of executing the tests, rather than just executing them as JUnit tests, so you can possibly
+                        separate your executions.
+                        -->
                         <goals>
                             <goal>run</goal>
                         </goals>
@@ -93,7 +103,7 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
                             <tasks>
                                 <echo message="Running Cucumber Ruby Features"/>
                                 <java fork="true"
-                                      classname="cucumber.cli.Main"
+                                      classname="cucumber.api.cli.Main"
                                       classpathref="maven.test.classpath"
                                       failonerror="true">
                                     <arg value="-f"/>
@@ -115,6 +125,11 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <profiles>
         <profile>
+            <!--
+            This profile provides a way to prep for you an initial bundle. It will also install the bundler gem into
+            the specified Gem Path. It doesn't listen to the cucumber-jruby.properties. That's for JRuby's internal
+            execution. They should probably match.
+            -->
             <id>initial-bundle</id>
             <build>
                 <plugins>

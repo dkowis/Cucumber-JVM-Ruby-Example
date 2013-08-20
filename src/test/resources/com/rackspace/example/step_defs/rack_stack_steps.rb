@@ -1,9 +1,11 @@
 require 'java'
 require 'test/unit'
-include Test::Unit::Assertions
 
 require 'rubygems'
 require 'rspec'
+
+require 'cucumber/api/jruby/en'
+include Test::Unit::Assertions
 
 World do
   extend RSpec::Matchers
@@ -26,7 +28,8 @@ Then /^the stack contains one item$/ do
 end
 
 When /^I push another item into the stack$/ do
-  When "I push an item into the stack"
+  # To call another step from within a step
+  step "I push an item into the stack"
 end
 
 Then /^the stack contains two items$/ do
