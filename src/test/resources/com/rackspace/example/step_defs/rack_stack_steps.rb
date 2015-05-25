@@ -7,10 +7,7 @@ require 'rspec'
 require 'cucumber/api/jruby/en'
 include Test::Unit::Assertions
 
-World do
-  extend RSpec::Matchers
-end
-
+include RSpec::Matchers
 
 Given /^an empty stack$/ do
   java_import com.rackspace.example.RackStack
