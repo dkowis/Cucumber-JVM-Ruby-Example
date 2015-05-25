@@ -11,7 +11,7 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <name>Examples: Ruby Stack</name>
 
     <properties>
-        <cucumber-jvm-version>1.1.4</cucumber-jvm-version>
+        <cucumber-jvm-version>1.2.2</cucumber-jvm-version>
     </properties>
 
     <!-- Uncomment to use the snapshots, else install them by hand
@@ -106,7 +106,7 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
                                       classname="cucumber.api.cli.Main"
                                       classpathref="maven.test.classpath"
                                       failonerror="true">
-                                    <arg value="-f"/>
+                                    <arg value="--plugin"/>
                                     <arg value="pretty"/>
                                     <arg value="--glue"/>
                                     <!-- this path is relative to things in the class path -->
