@@ -11,22 +11,14 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <name>Examples: Ruby Stack</name>
 
     <properties>
-        <cucumber-jvm-version>1.2.2</cucumber-jvm-version>
+        <cucumber-jvm-version>1.2.4</cucumber-jvm-version>
     </properties>
-
-    <!-- Uncomment to use the snapshots, else install them by hand
-    <repositories>
-        <repository>
-            <id>sonatype-snapshots</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-        </repository>
-    </repositories> -->
 
     <dependencies>
         <dependency>
             <groupId>org.jruby</groupId>
             <artifactId>jruby-complete</artifactId>
-            <version>1.7.4</version>
+            <version>9.0.1.0</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -44,7 +36,7 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.11</version>
+            <version>4.12</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -71,16 +63,32 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
                         -->
                         <configuration>
                             <target>
-                                <echo message="Doing bundle install"/>
-                                <java jar="${maven.dependency.org.jruby.jruby-complete.jar.path}"
-                                      fork="true" failonerror="true" maxmemory="512m"
-                                      newenvironment="true">
-                                    <env key="GEM_HOME" path="${basedir}/src/test/gems"/>
-                                    <arg value="-S"/>
-                                    <arg value="${basedir}/src/test/gems/bin/bundle"/>
-                                    <arg value="install"/>
-                                    <arg value="--gemfile=${basedir}/Gemfile"/>
-                                </java>
+                                <sequential>
+                                    <echo message="Installing bundler gem"/>
+                                    <java jar="${maven.dependency.org.jruby.jruby-complete.jar.path}"
+                                          fork="true" failonerror="true" maxmemory="256m"
+                                          newenvironment="true">
+                                        <arg value="-S"/>
+                                        <arg value="gem"/>
+                                        <arg value="install"/>
+                                        <arg value="bundler"/>
+                                        <arg value="-i"/>
+                                        <arg value="${basedir}/src/test/gems"/>
+                                        <arg value="--no-ri"/>
+                                        <arg value="--no-rdoc"/>
+                                    </java>
+
+                                    <echo message="Doing bundle install"/>
+                                    <java jar="${maven.dependency.org.jruby.jruby-complete.jar.path}"
+                                          fork="true" failonerror="true" maxmemory="512m"
+                                          newenvironment="true">
+                                        <env key="GEM_HOME" path="${basedir}/src/test/gems"/>
+                                        <arg value="-S"/>
+                                        <arg value="${basedir}/src/test/gems/bin/bundle"/>
+                                        <arg value="install"/>
+                                        <arg value="--gemfile=${basedir}/Gemfile"/>
+                                    </java>
+                                </sequential>
                             </target>
                         </configuration>
                         <goals>
